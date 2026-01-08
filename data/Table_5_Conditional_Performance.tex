@@ -1,0 +1,34 @@
+
+\begin{table}[htbp]
+\centering
+\caption{Conditional Performance Analysis}
+\label{tab:conditional}
+\begin{tabular}{l*{3}{c}}
+\toprule
+ & \multicolumn{1}{c}{BACBB} & \multicolumn{1}{c}{BACB} & \multicolumn{1}{c}{Market} \\
+\midrule
+\multicolumn{4}{l}{\textit{Panel A: Market Down Days ($r_m < -2\%$)}} \\
+\addlinespace
+Mean Return (\%) & -0.637 & -1.111 & -4.767 \\
+Std. Dev. (\%) & 0.716 & 1.208 & 3.026 \\
+Observations & 434 & 434 & 434 \\
+Defense Rate (\%) & 86.6 & 76.7 & --- \\
+\addlinespace
+\multicolumn{4}{l}{\textit{Panel B: Market Up Days ($r_m > +2\%$)}} \\
+\addlinespace
+Mean Return (\%) & 0.716 & 1.089 & 4.340 \\
+Std. Dev. (\%) & 0.953 & 1.311 & 2.393 \\
+Observations & 519 & 519 & 519 \\
+\addlinespace
+\multicolumn{4}{l}{\textit{Panel C: Normal Days ($-2\% \leq r_m \leq +2\%$)}} \\
+\addlinespace
+Mean Return (\%) & 0.009 & -0.004 & 0.069 \\
+Std. Dev. (\%) & 0.507 & 0.828 & 1.121 \\
+Observations & 876 & 876 & 876 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes:} This table reports conditional performance statistics based on market return regimes. Defense Rate measures the percentage of market losses avoided during down days.
+\end{tablenotes}
+\end{table}

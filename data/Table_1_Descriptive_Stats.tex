@@ -1,0 +1,40 @@
+
+\begin{table}[htbp]
+\centering
+\caption{Descriptive Statistics of Daily Returns}
+\label{tab:descriptive}
+\begin{tabular}{l*{4}{c}}
+\toprule
+ & \multicolumn{1}{c}{BACBB} & \multicolumn{1}{c}{BACB} & \multicolumn{1}{c}{Buy \& Hold} & \multicolumn{1}{c}{Market} \\
+\midrule
+\multicolumn{5}{l}{\textit{Panel A: Return Statistics}} \\
+\addlinespace
+Mean (\%) & 14.14^{***} & 11.01 & 33.66 & --- \\
+ & (0.32) & (0.50) & (1.44) & \\
+Std. Dev. (\%) & 13.66 & 21.24 & 61.72 & --- \\
+Skewness & 1.023 & 0.235 & -0.487 & --- \\
+Kurtosis & 8.632 & 6.884 & 4.346 & --- \\
+\addlinespace
+\multicolumn{5}{l}{\textit{Panel B: Risk-Adjusted Performance}} \\
+\addlinespace
+Sharpe Ratio & 1.04 & 0.52 & 0.55 & --- \\
+Sortino Ratio & 1.64 & 0.72 & 0.73 & --- \\
+Calmar Ratio & 0.88 & 0.25 & 0.42 & --- \\
+\addlinespace
+\multicolumn{5}{l}{\textit{Panel C: Drawdown \& Win Rate}} \\
+\addlinespace
+Max Drawdown (\%) & -16.15 & -44.12 & -79.90 & --- \\
+Win Rate (\%) & 50.2 & 50.6 & 53.5 & --- \\
+\addlinespace
+\multicolumn{5}{l}{\textit{Panel D: Statistical Significance}} \\
+\addlinespace
+$t$-statistic & 2.79 & 1.40 & 1.47 & --- \\
+$p$-value & 0.0054 & 0.1625 & 0.1420 & --- \\
+Observations & 1,829 & 1,829 & 1,829 & --- \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes:} This table reports descriptive statistics for daily returns of BACBB (Betting Against Cryptocurrency Bad Beta), BACB (Betting Against Cryptocurrency Beta), and Buy \& Hold strategies. Mean and Std. Dev. are annualized. Standard errors are in parentheses. $^{***}$, $^{**}$, and $^{*}$ denote statistical significance at the 1\%, 5\%, and 10\% levels, respectively.
+\end{tablenotes}
+\end{table}

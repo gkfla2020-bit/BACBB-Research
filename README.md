@@ -438,6 +438,32 @@ Expected Return
 |  r<sub>f</sub>  | 무위험수익률 | 3M Treasury |
 |  f  | 펀딩비 | Actual data |
 
+### 3.8 전략 구조도
+
+#### 📊 Figure: BACBB 전략 로직 구조도
+
+<p align="center">
+  <img src="data/Figure_BACBB_Logic_Flow.png" width="95%" alt="BACBB Logic Flow">
+</p>
+
+> BACBB 전략의 전체 로직 흐름을 보여준다. 데이터 입력 → VAR 모델 추정 → Campbell-Shiller 분해 → Beta 추정 → 포트폴리오 구성 → 수익률 계산의 6단계로 구성된다.
+
+#### 📊 Figure: Campbell-Shiller 분해 구조
+
+<p align="center">
+  <img src="data/Figure_Campbell_Shiller_Decomposition.png" width="90%" alt="Campbell-Shiller Decomposition">
+</p>
+
+> 시장 수익률을 Cash-Flow News(영구적 충격)와 Discount Rate News(일시적 충격)로 분해하는 Campbell-Shiller 분해의 구조를 보여준다. Cash-Flow Beta는 "Bad Beta"로, 이에 민감한 자산은 장기적으로 더 큰 위험에 노출된다.
+
+#### 📊 Figure: 펀딩비 메커니즘
+
+<p align="center">
+  <img src="data/Figure_Funding_Rate_Structure.png" width="90%" alt="Funding Rate Structure">
+</p>
+
+> 암호화폐 무기한 선물 시장의 펀딩비 메커니즘을 보여준다. 선물 가격이 현물보다 높으면 Long이 Short에게, 낮으면 Short이 Long에게 펀딩비를 지급하여 가격 수렴을 유도한다.
+
 ---
 
 ## 📈 Empirical Results (실증 결과)
@@ -989,6 +1015,8 @@ p-value: 0.003 *
     │   ├── generate_samples.py           # 샘플 그래프 생성
     │   ├── generate_samples_extended.py  # 확장 그래프 생성
     │   ├── generate_asset_tables.py      # 자산 테이블 생성
+    │   ├── generate_asset_analysis.py    # 자산별 분석 코드
+    │   ├── generate_diagrams.py          # 논문 구조도/다이어그램 생성
     │   ├── generate_oos_graph.py         # OOS 그래프 생성
     │   └── generate_stata_tables.py      # Stata 테이블 생성
     │
@@ -1010,7 +1038,10 @@ p-value: 0.003 *
     │   ├── sample_15_OOS_Summary.png
     │   ├── Figure_Asset_CF_Beta.png        # 자산별 CF Beta 분석
     │   ├── Figure_Group_Performance.png    # 그룹별 성과 비교
-    │   └── Figure_Beta_Distribution.png    # 베타 분포
+    │   ├── Figure_Beta_Distribution.png    # 베타 분포
+    │   ├── Figure_BACBB_Logic_Flow.png     # BACBB 전략 로직 구조도
+    │   ├── Figure_Funding_Rate_Structure.png  # 펀딩비 구조 그림
+    │   └── Figure_Campbell_Shiller_Decomposition.png  # Campbell-Shiller 분해
     │
     ├── 📊 Asset Analysis Tables
     │   ├── Table_Asset_Analysis.csv        # 전체 50개 자산 분석
@@ -1061,6 +1092,9 @@ python data/BACBB_QuantStats_Report.py
 # 시각화 생성
 python data/generate_samples.py
 python data/generate_samples_extended.py
+
+# 논문 구조도/다이어그램 생성
+python data/generate_diagrams.py
 ```
 
 ---

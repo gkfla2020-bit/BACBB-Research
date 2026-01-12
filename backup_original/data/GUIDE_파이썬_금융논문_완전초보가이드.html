@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 금융논문 완전 초보 가이드</title>
+    <style>
+        @media print {
+            body { font-size: 11pt; }
+            pre { page-break-inside: avoid; }
+            h1, h2, h3 { page-break-after: avoid; }
+        }
+        
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            color: #333;
+            background: #fff;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-top: 40px;
+        }
+        
+        h2 {
+            color: #2980b9;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 10px;
+            margin-top: 35px;
+        }
+        
+        h3 {
+            color: #27ae60;
+            margin-top: 25px;
+        }
+        
+        h4 {
+            color: #8e44ad;
+            margin-top: 20px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            line-height: 1.5;
+            margin: 20px 0;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: #f8f8f2;
+            font-size: 0.85em;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #3498db;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            color: #555;
+        }
+        
+        hr {
+            border: none;
+            border-top: 2px solid #eee;
+            margin: 40px 0;
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        /* 이모지 스타일 */
+        .emoji {
+            font-size: 1.2em;
+        }
+        
+        /* 팁 박스 */
+        p:has(strong:first-child) {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        /* 링크 */
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 목차 */
+        .toc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        
+        .toc a {
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="_1">🐣 파이썬 금융논문 완전 초보 가이드</h1>
+<blockquote>
+<p>AI 없이 혼자서 금융 논문과 분석 코드를 작성하기 위한 완전 초보자용 가이드</p>
+<p>이 가이드는 "초딩한테 알려주듯" 하나하나 설명합니다. 천천히 따라오세요!</p>
+</blockquote>
+<hr />
+<h2 id="_2">📚 목차</h2>
+<ol>
+<li><a href="#1-파이썬-기초---진짜-기초부터">파이썬 기초 - 진짜 기초부터</a></li>
+<li><a href="#2-pandas---데이터-다루기">pandas - 데이터 다루기</a></li>
+<li><a href="#3-금융-데이터-분석-기초">금융 데이터 분석 기초</a></li>
+<li><a href="#4-아이디어--논문-흐름">아이디어 → 논문 흐름</a></li>
+<li><a href="#5-bacbb-코드-한줄한줄-해설">BACBB 코드 한줄한줄 해설</a></li>
+<li><a href="#6-통계-검정-방법">통계 검정 방법</a></li>
+<li><a href="#7-그래프와-표-만들기">그래프와 표 만들기</a></li>
+<li><a href="#8-실전-팁과-자주-하는-실수">실전 팁과 자주 하는 실수</a></li>
+</ol>
+<hr />
+<h2 id="1-">1. 파이썬 기초 - 진짜 기초부터</h2>
+<h3 id="11">1.1 변수란?</h3>
+<p>변수는 <strong>값을 담는 상자</strong>예요. 상자에 이름표를 붙여서 나중에 꺼내 쓸 수 있어요.</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 숫자 담기
+price = 100          # price라는 상자에 100을 넣음
+return_rate = 0.05   # return_rate라는 상자에 0.05를 넣음
+
+# 문자 담기
+coin_name = &quot;BTC&quot;    # coin_name이라는 상자에 &quot;BTC&quot;를 넣음
+
+# 계산하기
+new_price = price * (1 + return_rate)  # 100 * 1.05 = 105
+print(new_price)     # 화면에 105 출력
+</code></pre>
+<p><strong>💡 핵심 포인트:</strong>
+- <code>=</code>는 "같다"가 아니라 "넣는다"라는 뜻!
+- 변수 이름은 영어로, 의미 있게 짓기 (예: <code>price</code>, <code>return_rate</code>)
+- 띄어쓰기 대신 <code>_</code> 사용 (예: <code>coin_name</code>)</p>
+<h3 id="12-list">1.2 리스트 (List)</h3>
+<p>리스트는 <strong>여러 값을 순서대로 담는 상자</strong>예요.</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 코인 이름들을 리스트로
+coins = [&quot;BTC&quot;, &quot;ETH&quot;, &quot;XRP&quot;, &quot;SOL&quot;]
+
+# 첫 번째 코인 꺼내기 (0부터 시작!)
+first_coin = coins[0]   # &quot;BTC&quot;
+print(first_coin)
+
+# 두 번째 코인
+second_coin = coins[1]  # &quot;ETH&quot;
+
+# 마지막 코인 (-1은 뒤에서 첫 번째)
+last_coin = coins[-1]   # &quot;SOL&quot;
+
+# 리스트 길이 (몇 개 있나?)
+count = len(coins)      # 4
+</code></pre>
+<p><strong>💡 핵심 포인트:</strong>
+- 인덱스는 0부터 시작! (첫 번째 = 0, 두 번째 = 1)
+- <code>len()</code>으로 개수 세기
+- <code>-1</code>은 마지막, <code>-2</code>는 뒤에서 두 번째</p>
+<h3 id="13-dictionary">1.3 딕셔너리 (Dictionary)</h3>
+<p>딕셔너리는 <strong>이름표가 붙은 서랍장</strong>이에요. 이름으로 값을 찾을 수 있어요.</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 코인별 가격
+prices = {
+    &quot;BTC&quot;: 50000,
+    &quot;ETH&quot;: 3000,
+    &quot;XRP&quot;: 0.5
+}
+
+# BTC 가격 꺼내기
+btc_price = prices[&quot;BTC&quot;]  # 50000
+
+# 새 코인 추가
+prices[&quot;SOL&quot;] = 100
+
+# 모든 코인 이름 보기
+coin_names = list(prices.keys())  # [&quot;BTC&quot;, &quot;ETH&quot;, &quot;XRP&quot;, &quot;SOL&quot;]
+</code></pre>
+<h3 id="14-for-loop">1.4 반복문 (for loop)</h3>
+<p>같은 작업을 여러 번 반복할 때 사용해요.</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 모든 코인 이름 출력하기
+coins = [&quot;BTC&quot;, &quot;ETH&quot;, &quot;XRP&quot;]
+
+for coin in coins:
+    print(coin)
+# 출력:
+# BTC
+# ETH
+# XRP
+
+# 각 코인의 수익률 계산하기
+returns = [0.05, -0.02, 0.10]
+
+for i, ret in enumerate(returns):
+    print(f&quot;{i}번째 수익률: {ret * 100}%&quot;)
+# 출력:
+# 0번째 수익률: 5.0%
+# 1번째 수익률: -2.0%
+# 2번째 수익률: 10.0%
+</code></pre>
+<p><strong>💡 핵심 포인트:</strong>
+- <code>for 변수 in 리스트:</code> 형태로 사용
+- 들여쓰기(스페이스 4칸)가 중요! 들여쓴 부분이 반복됨
+- <code>enumerate()</code>를 쓰면 순서 번호도 같이 받을 수 있음</p>
+<h3 id="15-if">1.5 조건문 (if)</h3>
+<p>조건에 따라 다른 행동을 할 때 사용해요.</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">return_rate = 0.05
+
+if return_rate &gt; 0:
+    print(&quot;수익!&quot;)
+elif return_rate &lt; 0:
+    print(&quot;손실...&quot;)
+else:
+    print(&quot;본전&quot;)
+
+# 한 줄로 쓰기 (삼항 연산자)
+result = &quot;수익&quot; if return_rate &gt; 0 else &quot;손실&quot;
+</code></pre>
+<h3 id="16-function">1.6 함수 (Function)</h3>
+<p>자주 쓰는 코드를 묶어서 이름 붙여놓은 거예요.</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 함수 만들기
+def calculate_return(buy_price, sell_price):
+    &quot;&quot;&quot;
+    수익률을 계산하는 함수
+
+    Parameters:
+    - buy_price: 매수 가격
+    - sell_price: 매도 가격
+
+    Returns:
+    - 수익률 (소수점)
+    &quot;&quot;&quot;
+    return_rate = (sell_price - buy_price) / buy_price
+    return return_rate
+
+# 함수 사용하기
+my_return = calculate_return(100, 110)  # 0.1 (10%)
+print(f&quot;수익률: {my_return * 100}%&quot;)
+</code></pre>
+<p><strong>💡 핵심 포인트:</strong>
+- <code>def 함수이름(입력값):</code> 형태로 만듦
+- <code>return</code>으로 결과 돌려줌
+- <code>"""</code> 안에 설명 쓰면 나중에 뭐하는 함수인지 알 수 있음</p>
+<hr />
+<h2 id="2-pandas-">2. pandas - 데이터 다루기</h2>
+<p>pandas는 <strong>엑셀 같은 표 데이터를 다루는 도구</strong>예요. 금융 분석의 핵심!</p>
+<h3 id="21-pandas">2.1 pandas 불러오기</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">import pandas as pd   # pandas를 pd라는 별명으로 부름
+import numpy as np    # numpy를 np라는 별명으로 부름 (수학 계산용)
+</code></pre>
+<p><strong>💡 왜 별명을 쓰나요?</strong>
+- <code>pandas.read_csv()</code> 대신 <code>pd.read_csv()</code>로 짧게 쓸 수 있어요
+- 전 세계 개발자들이 다 이렇게 써서 약속처럼 됐어요</p>
+<h3 id="22">2.2 데이터 불러오기</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># CSV 파일 불러오기
+prices = pd.read_csv('04_daily_prices.csv')
+
+# 처음 5줄 보기
+print(prices.head())
+
+# 마지막 5줄 보기
+print(prices.tail())
+
+# 데이터 정보 보기
+print(prices.info())
+
+# 데이터 크기 (행, 열)
+print(prices.shape)  # (1000, 50) = 1000행, 50열
+</code></pre>
+<h3 id="23">2.3 날짜를 인덱스로 설정하기</h3>
+<p>금융 데이터는 날짜가 핵심이에요!</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 날짜 컬럼을 인덱스로 설정
+prices = pd.read_csv('04_daily_prices.csv', 
+                     index_col=0,        # 첫 번째 열을 인덱스로
+                     parse_dates=True)   # 날짜로 인식하게
+
+# 이제 날짜로 데이터 찾기 가능
+print(prices.loc['2024-01-01'])  # 2024년 1월 1일 데이터
+</code></pre>
+<p><strong>💡 index_col=0 이 뭐예요?</strong>
+- CSV 파일의 첫 번째 열(0번)을 행 이름(인덱스)으로 쓰겠다는 뜻
+- 보통 첫 번째 열에 날짜가 있어요</p>
+<h3 id="24">2.4 특정 열/행 선택하기</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 특정 열 선택 (BTC 가격만)
+btc_prices = prices['BTC']
+
+# 여러 열 선택
+selected = prices[['BTC', 'ETH', 'XRP']]
+
+# 특정 날짜 범위 선택
+prices_2024 = prices['2024-01-01':'2024-12-31']
+
+# 조건으로 선택 (BTC가 50000 이상인 날만)
+high_btc = prices[prices['BTC'] &gt; 50000]
+</code></pre>
+<h3 id="25">2.5 기본 통계 계산</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 평균
+mean_price = prices['BTC'].mean()
+
+# 표준편차 (변동성)
+std_price = prices['BTC'].std()
+
+# 최대/최소
+max_price = prices['BTC'].max()
+min_price = prices['BTC'].min()
+
+# 한번에 다 보기
+print(prices['BTC'].describe())
+</code></pre>
+<h3 id="26">2.6 수익률 계산하기</h3>
+<p>이게 금융 분석의 핵심이에요!</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 일간 수익률 계산
+# pct_change() = (오늘 - 어제) / 어제
+returns = prices.pct_change()
+
+# 첫 번째 행은 NaN (어제가 없으니까)
+# 그래서 보통 제거함
+returns = returns.dropna()
+
+# 로그 수익률 (학술 논문에서 많이 씀)
+log_returns = np.log(prices / prices.shift(1))
+</code></pre>
+<p><strong>💡 왜 로그 수익률을 쓰나요?</strong>
+- 수학적으로 더 좋은 성질이 있어요 (더하기가 가능)
+- 정규분포에 더 가까워요
+- 논문에서는 로그 수익률을 많이 써요</p>
+<h3 id="27-nan">2.7 결측치(NaN) 처리</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># NaN 확인
+print(prices.isna().sum())  # 각 열별 NaN 개수
+
+# NaN 제거
+clean_data = prices.dropna()
+
+# NaN을 0으로 채우기
+filled_data = prices.fillna(0)
+
+# NaN을 앞의 값으로 채우기 (forward fill)
+filled_data = prices.fillna(method='ffill')
+
+# NaN을 뒤의 값으로 채우기 (backward fill)
+filled_data = prices.fillna(method='bfill')
+</code></pre>
+<h3 id="28">2.8 이동평균 계산</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 20일 이동평균
+ma_20 = prices['BTC'].rolling(window=20).mean()
+
+# 60일 이동평균
+ma_60 = prices['BTC'].rolling(window=60).mean()
+
+# 이동 표준편차 (변동성)
+rolling_std = prices['BTC'].rolling(window=20).std()
+</code></pre>
+<p><strong>💡 rolling(window=20)이 뭐예요?</strong>
+- "20개씩 묶어서"라는 뜻
+- 오늘 기준 최근 20일 데이터로 평균 계산
+- 매일 한 칸씩 이동하면서 계산 (그래서 "이동"평균)</p>
+<hr />
+<h2 id="3">3. 금융 데이터 분석 기초</h2>
+<h3 id="31">3.1 핵심 지표들</h3>
+<p>금융 논문에서 꼭 나오는 지표들이에요.</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">import pandas as pd
+import numpy as np
+from scipy import stats
+
+def calculate_metrics(returns):
+    &quot;&quot;&quot;
+    전략의 성과 지표를 계산하는 함수
+
+    Parameters:
+    - returns: 일간 수익률 Series
+
+    Returns:
+    - dict: 각종 성과 지표
+    &quot;&quot;&quot;
+    # 연간화 (일간 → 연간)
+    # 1년 = 약 252 거래일
+    ann_return = returns.mean() * 252           # 연간 수익률
+    ann_volatility = returns.std() * np.sqrt(252)  # 연간 변동성
+
+    # 샤프 비율 = 수익률 / 변동성
+    # &quot;위험 대비 수익&quot;을 나타냄
+    sharpe_ratio = ann_return / ann_volatility
+
+    # 소르티노 비율 = 수익률 / 하락 변동성
+    # 손실만 고려한 위험 대비 수익
+    downside_returns = returns[returns &lt; 0]
+    downside_vol = downside_returns.std() * np.sqrt(252)
+    sortino_ratio = ann_return / downside_vol
+
+    # 최대 낙폭 (MDD)
+    cumulative = (1 + returns).cumprod()  # 누적 수익
+    rolling_max = cumulative.cummax()      # 역대 최고점
+    drawdown = (cumulative - rolling_max) / rolling_max
+    max_drawdown = drawdown.min()
+
+    # 승률
+    win_rate = (returns &gt; 0).mean()
+
+    return {
+        'ann_return': ann_return,
+        'ann_volatility': ann_volatility,
+        'sharpe_ratio': sharpe_ratio,
+        'sortino_ratio': sortino_ratio,
+        'max_drawdown': max_drawdown,
+        'win_rate': win_rate
+    }
+</code></pre>
+<p><strong>💡 각 지표 설명:</strong></p>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th>의미</th>
+<th>좋은 값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>연간 수익률</td>
+<td>1년에 얼마 버나</td>
+<td>높을수록 좋음</td>
+</tr>
+<tr>
+<td>변동성</td>
+<td>얼마나 출렁이나</td>
+<td>낮을수록 안정적</td>
+</tr>
+<tr>
+<td>샤프 비율</td>
+<td>위험 대비 수익</td>
+<td>1 이상이면 좋음, 2 이상이면 훌륭</td>
+</tr>
+<tr>
+<td>소르티노 비율</td>
+<td>손실 위험 대비 수익</td>
+<td>높을수록 좋음</td>
+</tr>
+<tr>
+<td>MDD</td>
+<td>최악의 손실</td>
+<td>작을수록 좋음 (보통 음수)</td>
+</tr>
+<tr>
+<td>승률</td>
+<td>돈 번 날 비율</td>
+<td>50% 이상이면 좋음</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-beta">3.2 베타(Beta) 계산</h3>
+<p>베타는 <strong>시장과 얼마나 같이 움직이나</strong>를 나타내요.</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def calculate_beta(asset_returns, market_returns):
+    &quot;&quot;&quot;
+    베타 계산
+
+    베타 = Cov(자산, 시장) / Var(시장)
+
+    - 베타 &gt; 1: 시장보다 더 많이 움직임 (공격적)
+    - 베타 = 1: 시장과 똑같이 움직임
+    - 베타 &lt; 1: 시장보다 덜 움직임 (방어적)
+    - 베타 &lt; 0: 시장과 반대로 움직임
+    &quot;&quot;&quot;
+    # 공분산 (같이 움직이는 정도)
+    covariance = asset_returns.cov(market_returns)
+
+    # 시장 분산
+    market_variance = market_returns.var()
+
+    # 베타
+    beta = covariance / market_variance
+
+    return beta
+
+# 사용 예시
+btc_beta = calculate_beta(returns['BTC'], market_returns)
+print(f&quot;BTC 베타: {btc_beta:.2f}&quot;)
+</code></pre>
+<h3 id="33">3.3 상관관계 분석</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 두 자산 간 상관관계
+correlation = returns['BTC'].corr(returns['ETH'])
+print(f&quot;BTC-ETH 상관관계: {correlation:.2f}&quot;)
+
+# 모든 자산 간 상관관계 행렬
+corr_matrix = returns.corr()
+print(corr_matrix)
+
+# 히트맵으로 시각화
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.figure(figsize=(10, 8))
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', center=0)
+plt.title('자산 간 상관관계')
+plt.savefig('correlation_heatmap.png')
+plt.close()
+</code></pre>
+<h3 id="34">3.4 회귀분석 기초</h3>
+<p>회귀분석은 <strong>"X가 Y에 얼마나 영향을 주나"</strong>를 분석하는 거예요.</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">from scipy import stats
+
+def simple_regression(y, x):
+    &quot;&quot;&quot;
+    단순 회귀분석
+    y = alpha + beta * x + error
+
+    Parameters:
+    - y: 종속변수 (설명하고 싶은 것)
+    - x: 독립변수 (설명하는 것)
+
+    Returns:
+    - alpha: 절편 (x=0일 때 y값)
+    - beta: 기울기 (x가 1 증가하면 y가 beta만큼 변화)
+    - t_stat: t-통계량 (beta가 0이 아닌지 검정)
+    - p_value: p-값 (유의성)
+    - r_squared: 설명력 (0~1, 높을수록 잘 설명)
+    &quot;&quot;&quot;
+    # scipy의 linregress 사용
+    slope, intercept, r_value, p_value, std_err = stats.linregress(x, y)
+
+    # t-통계량
+    t_stat = slope / std_err
+
+    return {
+        'alpha': intercept,
+        'beta': slope,
+        't_stat': t_stat,
+        'p_value': p_value,
+        'r_squared': r_value ** 2
+    }
+
+# 사용 예시: BTC 수익률을 시장 수익률로 설명
+result = simple_regression(returns['BTC'], market_returns)
+print(f&quot;알파: {result['alpha']:.4f}&quot;)
+print(f&quot;베타: {result['beta']:.2f}&quot;)
+print(f&quot;t-stat: {result['t_stat']:.2f}&quot;)
+print(f&quot;p-value: {result['p_value']:.4f}&quot;)
+print(f&quot;R²: {result['r_squared']:.2f}&quot;)
+</code></pre>
+<p><strong>💡 결과 해석:</strong>
+- <strong>알파(α)</strong>: 시장과 무관한 초과 수익. 양수면 시장을 이김!
+- <strong>베타(β)</strong>: 시장 민감도. 1보다 크면 시장보다 더 출렁임
+- <strong>t-stat</strong>: 절대값이 2 이상이면 통계적으로 유의미
+- <strong>p-value</strong>: 0.05 미만이면 유의미 (95% 신뢰)
+- <strong>R²</strong>: 1에 가까울수록 설명력 높음</p>
+<hr />
+<h2 id="4">4. 아이디어 → 논문 흐름</h2>
+<h3 id="41">4.1 금융 논문의 기본 구조</h3>
+<pre><code>1. 서론 (Introduction)
+   - 왜 이 연구가 중요한가?
+   - 기존 연구의 한계는?
+   - 이 논문의 기여는?
+
+2. 문헌 검토 (Literature Review)
+   - 관련 선행 연구 정리
+   - 이론적 배경
+
+3. 방법론 (Methodology)
+   - 데이터 설명
+   - 분석 방법 설명
+   - 수식 제시
+
+4. 실증 결과 (Empirical Results)
+   - 기술 통계량
+   - 주요 분석 결과
+   - 강건성 검증
+
+5. 결론 (Conclusion)
+   - 주요 발견 요약
+   - 시사점
+   - 한계 및 향후 연구
+</code></pre>
+<h3 id="42">4.2 아이디어를 연구 질문으로 바꾸기</h3>
+<p><strong>예시: BACBB 전략의 경우</strong></p>
+<pre><code>💡 아이디어:
+&quot;암호화폐에서도 저베타 자산이 고베타 자산보다 좋지 않을까?&quot;
+
+⬇️
+
+📝 연구 질문:
+&quot;암호화폐 시장에서 Betting Against Beta 전략이 유효한가?&quot;
+
+⬇️
+
+🎯 가설:
+H1: 저베타 암호화폐 포트폴리오가 고베타 포트폴리오보다 
+    위험 조정 수익률이 높다.
+H2: BAB 전략의 알파가 통계적으로 유의미하게 양수이다.
+
+⬇️
+
+📊 검증 방법:
+1. 베타 계산 → 자산 분류
+2. 포트폴리오 구성 → 수익률 계산
+3. 성과 비교 → 통계 검정
+</code></pre>
+<h3 id="43">4.3 분석 단계별 체크리스트</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># ============================================
+# 1단계: 데이터 수집 및 정제
+# ============================================
+&quot;&quot;&quot;
+□ 데이터 출처 명시 (Yahoo Finance, Binance API 등)
+□ 분석 기간 설정
+□ 결측치 처리 방법 결정
+□ 이상치 처리 방법 결정
+□ 수익률 계산 방법 결정 (단순 vs 로그)
+&quot;&quot;&quot;
+
+# ============================================
+# 2단계: 기술 통계량
+# ============================================
+&quot;&quot;&quot;
+□ 평균, 표준편차, 최대, 최소
+□ 왜도(Skewness), 첨도(Kurtosis)
+□ 상관관계
+□ 정규성 검정
+&quot;&quot;&quot;
+
+# ============================================
+# 3단계: 핵심 분석
+# ============================================
+&quot;&quot;&quot;
+□ 베타/팩터 계산
+□ 포트폴리오 구성
+□ 수익률 계산
+□ 성과 지표 계산
+&quot;&quot;&quot;
+
+# ============================================
+# 4단계: 통계 검정
+# ============================================
+&quot;&quot;&quot;
+□ t-검정 (평균이 0과 다른가?)
+□ 회귀분석 (알파가 유의한가?)
+□ 유의수준 표시 (***, **, *)
+&quot;&quot;&quot;
+
+# ============================================
+# 5단계: 강건성 검증
+# ============================================
+&quot;&quot;&quot;
+□ 다른 기간으로 테스트
+□ 다른 방법론으로 테스트
+□ Out-of-Sample 검증
+□ 거래비용 반영
+&quot;&quot;&quot;
+</code></pre>
+<h3 id="44">4.4 코드 구조 설계</h3>
+<p>좋은 분석 코드는 이런 구조를 가져요:</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">&quot;&quot;&quot;
+논문 제목: BACBB 전략 분석
+저자: 홍길동
+날짜: 2024-01-01
+&quot;&quot;&quot;
+
+# ============================================
+# 0. 라이브러리 임포트
+# ============================================
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+
+# ============================================
+# 1. 설정
+# ============================================
+DATA_PATH = './data/'
+START_DATE = '2020-01-01'
+END_DATE = '2024-12-31'
+RISK_FREE_RATE = 0.05  # 연 5%
+
+# ============================================
+# 2. 함수 정의
+# ============================================
+def load_data():
+    &quot;&quot;&quot;데이터 로드&quot;&quot;&quot;
+    pass
+
+def calculate_beta():
+    &quot;&quot;&quot;베타 계산&quot;&quot;&quot;
+    pass
+
+def construct_portfolio():
+    &quot;&quot;&quot;포트폴리오 구성&quot;&quot;&quot;
+    pass
+
+# ============================================
+# 3. 메인 분석
+# ============================================
+if __name__ == &quot;__main__&quot;:
+    # 데이터 로드
+    data = load_data()
+
+    # 분석 실행
+    results = analyze(data)
+
+    # 결과 저장
+    save_results(results)
+</code></pre>
+<hr />
+<h2 id="5-bacbb">5. BACBB 코드 한줄한줄 해설</h2>
+<p>실제 BACBB_Analysis.py 코드를 한 줄씩 설명할게요.</p>
+<h3 id="51">5.1 라이브러리 임포트</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">import pandas as pd          # 데이터 분석용 (엑셀 같은 표 다루기)
+import numpy as np           # 수학 계산용 (행렬, 통계 등)
+import matplotlib.pyplot as plt  # 그래프 그리기
+from scipy import stats      # 통계 검정용
+from numpy.linalg import inv # 역행렬 계산용
+import warnings
+warnings.filterwarnings('ignore')  # 경고 메시지 숨기기
+</code></pre>
+<p><strong>💡 각 라이브러리 역할:</strong>
+- <code>pandas</code>: CSV 파일 읽기, 데이터 정리, 계산
+- <code>numpy</code>: 수학 계산 (평균, 표준편차, 행렬 연산)
+- <code>matplotlib</code>: 그래프 그리기
+- <code>scipy.stats</code>: t-검정, 회귀분석 등 통계
+- <code>numpy.linalg.inv</code>: 역행렬 (VAR 모델에서 사용)</p>
+<h3 id="52">5.2 한글 폰트 설정</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">plt.rcParams['font.family'] = 'Malgun Gothic'  # 윈도우용 한글 폰트
+plt.rcParams['axes.unicode_minus'] = False     # 마이너스 기호 깨짐 방지
+</code></pre>
+<p><strong>💡 맥에서는?</strong></p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">plt.rcParams['font.family'] = 'AppleGothic'
+</code></pre>
+<h3 id="53">5.3 데이터 로드</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># CSV 파일 읽기
+prices = pd.read_csv('04_daily_prices.csv',    # 파일 경로
+                     index_col=0,               # 첫 번째 열을 인덱스로
+                     parse_dates=True)          # 날짜로 인식
+
+returns = pd.read_csv('06_daily_returns.csv', index_col=0, parse_dates=True)
+volumes = pd.read_csv('05_daily_volumes.csv', index_col=0, parse_dates=True)
+funding = pd.read_csv('08_daily_funding_rate.csv', index_col=0, parse_dates=True)
+</code></pre>
+<p><strong>💡 각 데이터 설명:</strong>
+- <code>prices</code>: 일별 가격 (BTC 50000, ETH 3000 등)
+- <code>returns</code>: 일별 수익률 (0.05 = 5% 상승)
+- <code>volumes</code>: 일별 거래량
+- <code>funding</code>: 펀딩비 (선물 거래 비용)</p>
+<h3 id="54">5.4 공통 자산 찾기</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 모든 데이터에 공통으로 있는 자산만 선택
+common = list(set(prices.columns) &amp; set(returns.columns) &amp; 
+              set(volumes.columns) &amp; set(funding.columns))
+common = sorted(common)  # 알파벳 순 정렬
+print(f&quot;분석 자산: {len(common)}개&quot;)
+</code></pre>
+<p><strong>💡 왜 이렇게 하나요?</strong>
+- 어떤 데이터에는 BTC가 있고 어떤 데이터에는 없을 수 있어요
+- 모든 데이터에 공통으로 있는 자산만 분석해야 오류가 안 나요
+- <code>set()</code>: 중복 제거, <code>&amp;</code>: 교집합</p>
+<h3 id="55">5.5 결측치 처리</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 수익률: NaN을 0으로, 극단값 제한
+returns = returns.fillna(0).clip(-0.5, 0.5)
+
+# 펀딩비: 앞의 값으로 채우기
+funding = funding.fillna(method='ffill').fillna(0)
+</code></pre>
+<p><strong>💡 왜 clip(-0.5, 0.5)?</strong>
+- 하루에 -50% ~ +50% 이상 움직이면 데이터 오류일 가능성 높음
+- 극단값이 분석을 왜곡할 수 있어서 제한</p>
+<h3 id="56">5.6 시장 수익률 계산</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 거래량 가중 평균 수익률 = 시장 수익률
+vol_weights = volumes.div(volumes.sum(axis=1), axis=0).fillna(1/len(common))
+market_ret = (returns * vol_weights).sum(axis=1)
+</code></pre>
+<p><strong>💡 한 줄씩 설명:</strong></p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 1. 각 자산의 거래량 비중 계산
+vol_weights = volumes.div(volumes.sum(axis=1), axis=0)
+# volumes.sum(axis=1): 각 날짜별 전체 거래량
+# .div(..., axis=0): 각 자산 거래량 / 전체 거래량
+# 결과: BTC 0.4, ETH 0.3, ... (합이 1)
+
+# 2. 가중 평균 수익률
+market_ret = (returns * vol_weights).sum(axis=1)
+# returns * vol_weights: 각 자산 수익률 × 비중
+# .sum(axis=1): 날짜별로 합산
+# 결과: 시장 전체 수익률
+</code></pre>
+<h3 id="57-var">5.7 VAR 모델 상태변수 구성</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 상태변수 1: 시장 초과수익률
+market_excess = market_ret - rf_daily
+
+# 상태변수 2: 기간 스프레드 (장기금리 - 단기금리)
+term_spread = (treasury['DGS10'] - treasury['DGS3MO'])
+
+# 상태변수 3: 밸류에이션 (과거 수익률의 음수)
+valuation = -prices.mean(axis=1).pct_change(periods=500).fillna(0)
+</code></pre>
+<p><strong>💡 왜 이런 변수들을 쓰나요?</strong>
+- <strong>시장 초과수익률</strong>: 현재 시장 상황
+- <strong>기간 스프레드</strong>: 경기 전망 (높으면 경기 좋을 것으로 예상)
+- <strong>밸류에이션</strong>: 과거에 많이 올랐으면 고평가 (음수로 바꿔서 사용)</p>
+<h3 id="58-var-cash-flow-news">5.8 VAR 모델로 Cash-Flow News 추출</h3>
+<p>이 부분이 논문의 핵심이에요!</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def estimate_var_and_news(state_df, window=252):
+    &quot;&quot;&quot;
+    VAR(1) 모델 추정 및 Cash-Flow News 추출
+
+    Campbell-Shiller 분해:
+    - 시장 수익률 = 예상 수익률 + 예상치 못한 수익률
+    - 예상치 못한 수익률 = Cash-Flow News - Discount Rate News
+    &quot;&quot;&quot;
+
+    # 할인율 (일간)
+    rho = 0.997  # 연간 약 0.95에 해당
+
+    for i in range(window, len(dates)):
+        # 윈도우 데이터 (최근 252일)
+        z = state_df.iloc[i-window:i].values
+
+        # VAR(1) 추정: z_t = c + A * z_{t-1} + u_t
+        z_lag = z[:-1]   # 어제 데이터
+        z_curr = z[1:]   # 오늘 데이터
+
+        # OLS 회귀로 A 행렬 추정
+        X = np.column_stack([np.ones(len(z_lag)), z_lag])
+        beta = np.linalg.lstsq(X, z_curr, rcond=None)[0]
+        A = beta[1:].T
+
+        # 잔차 (예상치 못한 부분)
+        residuals = z_curr - X @ beta
+        u_t = residuals[-1]  # 오늘의 잔차
+
+        # Campbell-Shiller 분해
+        I = np.eye(n_vars)  # 단위행렬
+        inv_term = inv(I - rho * A)  # (I - ρA)^(-1)
+
+        # Discount Rate News
+        dr_news.iloc[i] = e1 @ (rho * A @ inv_term) @ u_t
+
+        # Cash-Flow News = 총 뉴스 + DR News
+        cf_news.iloc[i] = u_t[0] + dr_news.iloc[i]
+
+    return cf_news, dr_news
+</code></pre>
+<p><strong>💡 쉽게 설명하면:</strong>
+1. 과거 데이터로 "내일 시장이 어떨지" 예측하는 모델(VAR)을 만듦
+2. 실제 수익률 - 예측 수익률 = 예상치 못한 뉴스
+3. 이 뉴스를 두 가지로 분해:
+   - <strong>Cash-Flow News</strong>: 회사 실적 같은 영구적 충격
+   - <strong>Discount Rate News</strong>: 금리 변화 같은 일시적 충격</p>
+<h3 id="59-cash-flow-beta">5.9 Cash-Flow Beta 계산</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def estimate_cf_beta(ret_df, cf_news_series, window=60):
+    &quot;&quot;&quot;
+    Cash-Flow Beta (Bad Beta) 추정
+
+    β_CF = Cov(자산수익률, Cash-Flow News) / Var(Cash-Flow News)
+    &quot;&quot;&quot;
+
+    for i in range(window, len(dates)):
+        cf_window = cf_arr[i-window:i]      # 최근 60일 CF News
+        var_cf = np.var(cf_window)          # CF News의 분산
+
+        for j in range(len(cols)):
+            r_window = ret_arr[i-window:i, j]  # 자산의 최근 60일 수익률
+
+            # 공분산 / 분산 = 베타
+            cov_cf = np.cov(r_window, cf_window)[0, 1]
+            cf_beta.iloc[i, j] = cov_cf / var_cf
+
+    # Shrinkage (극단값 완화)
+    cf_beta = cf_beta * 0.6 + 0.4  # 1 방향으로 당기기
+    cf_beta = cf_beta.clip(0.1, 3.0)  # 범위 제한
+
+    return cf_beta
+</code></pre>
+<p><strong>💡 왜 Shrinkage를 하나요?</strong>
+- 베타 추정에는 오차가 있어요
+- 극단적인 베타값은 오차일 가능성이 높음
+- 1 방향으로 당겨서 오차를 줄임 (Vasicek adjustment)</p>
+<h3 id="510-bacbb">5.10 BACBB 포트폴리오 구성</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def construct_bacbb_factor(ret_df, cf_b, fp_b, fund_df, rf, mkt_ret):
+    &quot;&quot;&quot;
+    BACBB 팩터 구성
+
+    수식: r_BACBB = β_L^(-1) * (r_L - rf) - β_H^(-1) * (r_H - rf)
+
+    - Long: Low CF Beta (현금흐름 충격에 방어력)
+    - Short: High CF Beta (현금흐름 충격에 취약)
+    &quot;&quot;&quot;
+
+    # 비대칭 비중 (롱 70%, 숏 30%)
+    LONG_WEIGHT = 0.7
+    SHORT_WEIGHT = 0.3
+
+    # 매주 리밸런싱
+    for week in weeks:
+        # 첫 거래일의 베타로 자산 분류
+        cfb = cf_b.loc[first_day].dropna()
+
+        # 상위/하위 25% 선정
+        n_quartile = len(cfb) // 4
+        cfb_sorted = cfb.sort_values()
+
+        low_cfb = list(cfb_sorted.index[:n_quartile])   # 저베타 (롱)
+        high_cfb = list(cfb_sorted.index[-n_quartile:]) # 고베타 (숏)
+
+        # 포트폴리오 베타로 레버리지 조절
+        beta_L = fp_b[low_cfb].mean()
+        beta_H = fp_b[high_cfb].mean()
+
+        inv_beta_L = 1.0 / beta_L  # 베타 역수 = 레버리지
+        inv_beta_H = 1.0 / beta_H
+
+        # 일별 수익률 계산
+        for date in week_dates:
+            r_long = ret_df.loc[date, low_cfb].mean()   # 롱 포트폴리오 수익률
+            r_short = ret_df.loc[date, high_cfb].mean() # 숏 포트폴리오 수익률
+
+            # BACBB 수익률
+            long_pnl = LONG_WEIGHT * inv_beta_L * (r_long - rf_t)
+            short_pnl = SHORT_WEIGHT * inv_beta_H * (-r_short + rf_t)
+
+            bacbb_ret.loc[date] = long_pnl + short_pnl
+
+    return bacbb_ret
+</code></pre>
+<p><strong>💡 핵심 개념:</strong></p>
+<ol>
+<li><strong>왜 베타 역수로 곱하나요?</strong></li>
+<li>저베타 자산은 덜 움직이니까 더 많이 투자 (레버리지)</li>
+<li>고베타 자산은 많이 움직이니까 적게 투자</li>
+<li>
+<p>이렇게 하면 "베타 중립" 포트폴리오가 됨</p>
+</li>
+<li>
+<p><strong>왜 롱 70%, 숏 30%?</strong></p>
+</li>
+<li>암호화폐는 전반적으로 상승 추세</li>
+<li>
+<p>숏 비중을 줄여서 상승장에서도 수익</p>
+</li>
+<li>
+<p><strong>리밸런싱이 뭐예요?</strong></p>
+</li>
+<li>매주 베타를 다시 계산해서 포트폴리오 재구성</li>
+<li>베타는 시간에 따라 변하니까</li>
+</ol>
+<h3 id="511">5.11 성과 지표 계산</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def calc_metrics(ret, rf, name=&quot;Strategy&quot;):
+    &quot;&quot;&quot;전략 성과 지표 계산&quot;&quot;&quot;
+
+    ret = ret.dropna()
+    rf_aligned = rf.reindex(ret.index).fillna(0)
+    excess_ret = ret - rf_aligned  # 초과 수익률
+
+    # 연간화
+    ann_ret = ret.mean() * 252           # 연간 수익률
+    ann_vol = ret.std() * np.sqrt(252)   # 연간 변동성
+
+    # 샤프 비율
+    sharpe = ann_ret / ann_vol
+
+    # 소르티노 비율 (하락 변동성만 고려)
+    downside = ret[ret &lt; 0]
+    downside_vol = downside.std() * np.sqrt(252)
+    sortino = ann_ret / downside_vol
+
+    # 누적 수익률
+    cum_ret = (1 + ret).cumprod()
+    total_ret = cum_ret.iloc[-1] - 1
+
+    # 최대 낙폭 (MDD)
+    rolling_max = cum_ret.cummax()
+    drawdown = (cum_ret - rolling_max) / rolling_max
+    mdd = drawdown.min()
+
+    # 칼마 비율 (수익률 / MDD)
+    calmar = ann_ret / abs(mdd)
+
+    # 승률
+    win_rate = (ret &gt; 0).mean()
+
+    # t-검정 (수익률이 0과 다른가?)
+    n = len(ret)
+    mean_ret = ret.mean()
+    se = ret.std() / np.sqrt(n)  # 표준오차
+    t_stat = mean_ret / se
+    p_value = 2 * (1 - stats.t.cdf(abs(t_stat), n-1))
+
+    return {
+        'ann_ret': ann_ret,
+        'ann_vol': ann_vol,
+        'sharpe': sharpe,
+        'sortino': sortino,
+        'calmar': calmar,
+        'total_ret': total_ret,
+        'mdd': mdd,
+        'win_rate': win_rate,
+        't_stat': t_stat,
+        'p_value': p_value
+    }
+</code></pre>
+<p><strong>💡 각 지표 해석:</strong></p>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th>계산</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>연간 수익률</td>
+<td>일평균 × 252</td>
+<td>1년 기대 수익</td>
+</tr>
+<tr>
+<td>연간 변동성</td>
+<td>일표준편차 × √252</td>
+<td>1년 기대 변동폭</td>
+</tr>
+<tr>
+<td>샤프 비율</td>
+<td>수익률 / 변동성</td>
+<td>위험 대비 수익</td>
+</tr>
+<tr>
+<td>소르티노</td>
+<td>수익률 / 하락변동성</td>
+<td>손실 위험 대비 수익</td>
+</tr>
+<tr>
+<td>MDD</td>
+<td>최고점 대비 최대 하락</td>
+<td>최악의 손실</td>
+</tr>
+<tr>
+<td>칼마 비율</td>
+<td>수익률 / MDD</td>
+<td>MDD 대비 수익</td>
+</tr>
+<tr>
+<td>t-stat</td>
+<td>평균 / 표준오차</td>
+<td>통계적 유의성</td>
+</tr>
+</tbody>
+</table>
+<h3 id="512-5">5.12 5분위 분석</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def quintile_analysis(ret_df, beta_df, name=&quot;Beta&quot;):
+    &quot;&quot;&quot;
+    베타 기준 5분위 포트폴리오 분석
+
+    Q1: 베타 가장 낮은 20%
+    Q2: 베타 낮은 20%
+    Q3: 베타 중간 20%
+    Q4: 베타 높은 20%
+    Q5: 베타 가장 높은 20%
+    &quot;&quot;&quot;
+
+    quintile_returns = {f'Q{i}': [] for i in range(1, 6)}
+
+    for month in months:
+        # 월초 베타로 분류
+        b = beta_df.loc[first_day].dropna()
+        b_sorted = b.sort_values()
+
+        # 5등분
+        quintiles = np.array_split(b_sorted.index, 5)
+
+        # 각 분위별 수익률 계산
+        for date in month_dates:
+            for i, q_assets in enumerate(quintiles):
+                q_ret = ret_df.loc[date, q_assets].mean()
+                quintile_returns[f'Q{i+1}'].append(q_ret)
+
+    # Q1-Q5 스프레드 (저베타 - 고베타)
+    spread = Q1_returns - Q5_returns
+
+    return results
+</code></pre>
+<p><strong>💡 왜 5분위 분석을 하나요?</strong>
+- "저베타가 정말 좋은가?"를 검증
+- Q1(저베타)이 Q5(고베타)보다 수익률이 높으면 가설 지지
+- Q1-Q5 스프레드가 양수이고 유의하면 전략이 유효</p>
+<hr />
+<h2 id="6">6. 통계 검정 방법</h2>
+<h3 id="61-t-0">6.1 t-검정 (평균이 0과 다른가?)</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">from scipy import stats
+
+def t_test(returns):
+    &quot;&quot;&quot;
+    단일 표본 t-검정
+
+    H0 (귀무가설): 평균 수익률 = 0 (전략이 효과 없음)
+    H1 (대립가설): 평균 수익률 ≠ 0 (전략이 효과 있음)
+    &quot;&quot;&quot;
+    n = len(returns)
+    mean = returns.mean()
+    std = returns.std()
+    se = std / np.sqrt(n)  # 표준오차
+
+    # t-통계량
+    t_stat = mean / se
+
+    # p-값 (양측 검정)
+    p_value = 2 * (1 - stats.t.cdf(abs(t_stat), n-1))
+
+    return t_stat, p_value
+
+# 사용 예시
+t, p = t_test(bacbb_returns)
+print(f&quot;t-stat: {t:.2f}&quot;)
+print(f&quot;p-value: {p:.4f}&quot;)
+
+# 해석
+if p &lt; 0.01:
+    print(&quot;*** 1% 수준에서 유의 (매우 강한 증거)&quot;)
+elif p &lt; 0.05:
+    print(&quot;** 5% 수준에서 유의 (강한 증거)&quot;)
+elif p &lt; 0.10:
+    print(&quot;* 10% 수준에서 유의 (약한 증거)&quot;)
+else:
+    print(&quot;유의하지 않음&quot;)
+</code></pre>
+<p><strong>💡 쉽게 설명:</strong>
+- t-stat 절대값이 2 이상이면 대략 유의
+- p-value가 0.05 미만이면 "우연이 아니다"라고 95% 확신</p>
+<h3 id="62">6.2 회귀분석 (알파 검정)</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">from scipy import stats
+
+def alpha_test(strategy_returns, market_returns, rf):
+    &quot;&quot;&quot;
+    CAPM 회귀분석으로 알파 검정
+
+    r_strategy - rf = alpha + beta * (r_market - rf) + error
+
+    alpha &gt; 0이고 유의하면: 시장을 이기는 전략!
+    &quot;&quot;&quot;
+    # 초과 수익률
+    excess_strategy = strategy_returns - rf
+    excess_market = market_returns - rf
+
+    # 회귀분석
+    slope, intercept, r_value, p_value, std_err = stats.linregress(
+        excess_market, excess_strategy
+    )
+
+    # 알파의 t-통계량
+    n = len(excess_strategy)
+    residuals = excess_strategy - (intercept + slope * excess_market)
+    mse = (residuals ** 2).sum() / (n - 2)
+    se_alpha = np.sqrt(mse / n)
+    t_alpha = intercept / se_alpha
+    p_alpha = 2 * (1 - stats.t.cdf(abs(t_alpha), n-2))
+
+    return {
+        'alpha': intercept * 252,  # 연간화
+        'beta': slope,
+        't_stat': t_alpha,
+        'p_value': p_alpha,
+        'r_squared': r_value ** 2
+    }
+
+# 사용 예시
+result = alpha_test(bacbb_returns, market_returns, rf_daily)
+print(f&quot;연간 알파: {result['alpha']*100:.2f}%&quot;)
+print(f&quot;베타: {result['beta']:.2f}&quot;)
+print(f&quot;t-stat: {result['t_stat']:.2f}&quot;)
+print(f&quot;p-value: {result['p_value']:.4f}&quot;)
+</code></pre>
+<h3 id="63">6.3 유의수준 별표 표시</h3>
+<p>논문에서 흔히 쓰는 표기법:</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def get_significance_stars(p_value):
+    &quot;&quot;&quot;
+    p-value에 따른 유의수준 별표
+
+    ***: p &lt; 0.01 (99% 신뢰)
+    **:  p &lt; 0.05 (95% 신뢰)
+    *:   p &lt; 0.10 (90% 신뢰)
+    &quot;&quot;&quot;
+    if p_value &lt; 0.01:
+        return &quot;***&quot;
+    elif p_value &lt; 0.05:
+        return &quot;**&quot;
+    elif p_value &lt; 0.10:
+        return &quot;*&quot;
+    else:
+        return &quot;&quot;
+
+# 사용 예시
+stars = get_significance_stars(0.023)  # &quot;**&quot;
+print(f&quot;수익률: 15.2%{stars}&quot;)  # &quot;수익률: 15.2%**&quot;
+</code></pre>
+<h3 id="64-newey-west">6.4 Newey-West 표준오차</h3>
+<p>시계열 데이터는 자기상관이 있어서 일반 표준오차가 부정확해요.</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def newey_west_tstat(returns, lags=5):
+    &quot;&quot;&quot;
+    Newey-West 조정 t-통계량
+
+    자기상관을 고려한 더 정확한 표준오차
+    &quot;&quot;&quot;
+    n = len(returns)
+    mean = returns.mean()
+
+    # 자기공분산 계산
+    gamma = []
+    for j in range(lags + 1):
+        if j == 0:
+            gamma.append(((returns - mean) ** 2).sum() / n)
+        else:
+            gamma.append(((returns[j:] - mean) * (returns[:-j] - mean)).sum() / n)
+
+    # Newey-West 분산
+    nw_var = gamma[0]
+    for j in range(1, lags + 1):
+        weight = 1 - j / (lags + 1)  # Bartlett 가중치
+        nw_var += 2 * weight * gamma[j]
+
+    # 표준오차
+    nw_se = np.sqrt(nw_var / n)
+
+    # t-통계량
+    t_stat = mean / nw_se
+
+    return t_stat
+
+# 사용 예시
+t_nw = newey_west_tstat(bacbb_returns)
+print(f&quot;Newey-West t-stat: {t_nw:.2f}&quot;)
+</code></pre>
+<h3 id="65-out-of-sample">6.5 Out-of-Sample 검증</h3>
+<p>과적합(overfitting)을 방지하기 위한 검증:</p>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def out_of_sample_test(returns):
+    &quot;&quot;&quot;
+    In-Sample / Out-of-Sample 분리 검증
+
+    - 전반부로 전략 개발 (In-Sample)
+    - 후반부로 검증 (Out-of-Sample)
+    &quot;&quot;&quot;
+    # 데이터 반으로 나누기
+    split_idx = len(returns) // 2
+
+    in_sample = returns.iloc[:split_idx]
+    out_of_sample = returns.iloc[split_idx:]
+
+    # 각각 성과 계산
+    is_sharpe = in_sample.mean() / in_sample.std() * np.sqrt(252)
+    oos_sharpe = out_of_sample.mean() / out_of_sample.std() * np.sqrt(252)
+
+    print(f&quot;In-Sample 샤프: {is_sharpe:.2f}&quot;)
+    print(f&quot;Out-of-Sample 샤프: {oos_sharpe:.2f}&quot;)
+
+    # OOS 샤프가 IS의 50% 이상이면 양호
+    ratio = oos_sharpe / is_sharpe if is_sharpe != 0 else 0
+    print(f&quot;OOS/IS 비율: {ratio:.1%}&quot;)
+
+    return is_sharpe, oos_sharpe
+
+# 사용 예시
+is_s, oos_s = out_of_sample_test(bacbb_returns)
+</code></pre>
+<p><strong>💡 왜 중요한가요?</strong>
+- In-Sample에서만 좋으면 과적합일 수 있음
+- Out-of-Sample에서도 좋아야 진짜 유효한 전략
+- OOS 샤프가 IS의 50% 이상이면 괜찮은 편</p>
+<hr />
+<h2 id="7">7. 그래프와 표 만들기</h2>
+<h3 id="71">7.1 기본 그래프 설정</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">import matplotlib.pyplot as plt
+
+# 한글 폰트 설정
+plt.rcParams['font.family'] = 'Malgun Gothic'  # 윈도우
+# plt.rcParams['font.family'] = 'AppleGothic'  # 맥
+plt.rcParams['axes.unicode_minus'] = False
+
+# 기본 스타일 설정
+plt.rcParams['figure.figsize'] = (12, 6)  # 그래프 크기
+plt.rcParams['font.size'] = 12            # 글자 크기
+</code></pre>
+<h3 id="72">7.2 누적 수익률 그래프</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def plot_cumulative_returns(returns_dict, title=&quot;누적 수익률&quot;):
+    &quot;&quot;&quot;
+    여러 전략의 누적 수익률 비교 그래프
+
+    Parameters:
+    - returns_dict: {'전략명': 수익률Series} 형태
+    &quot;&quot;&quot;
+    fig, ax = plt.subplots(figsize=(12, 6))
+
+    colors = ['blue', 'red', 'green', 'orange', 'purple']
+
+    for i, (name, returns) in enumerate(returns_dict.items()):
+        # 누적 수익률 계산
+        cumulative = (1 + returns).cumprod()
+
+        # 그래프 그리기
+        ax.plot(cumulative.index, cumulative.values, 
+                label=name, color=colors[i % len(colors)], linewidth=1.5)
+
+    ax.axhline(y=1, color='black', linestyle='--', alpha=0.3)  # 기준선
+    ax.set_title(title, fontsize=14)
+    ax.set_xlabel('날짜')
+    ax.set_ylabel('누적 수익률')
+    ax.legend(loc='upper left')
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('cumulative_returns.png', dpi=150)
+    plt.close()
+
+# 사용 예시
+plot_cumulative_returns({
+    'BACBB': bacbb_returns,
+    'BACB': bacb_returns,
+    'Buy &amp; Hold': bh_returns
+})
+</code></pre>
+<h3 id="73">7.3 드로우다운 그래프</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def plot_drawdown(returns, title=&quot;드로우다운&quot;):
+    &quot;&quot;&quot;최대 낙폭 시각화&quot;&quot;&quot;
+
+    fig, ax = plt.subplots(figsize=(12, 5))
+
+    # 누적 수익률
+    cumulative = (1 + returns).cumprod()
+
+    # 드로우다운 계산
+    rolling_max = cumulative.cummax()
+    drawdown = (cumulative - rolling_max) / rolling_max * 100
+
+    # 그래프
+    ax.fill_between(drawdown.index, drawdown, 0, color='red', alpha=0.3)
+    ax.plot(drawdown.index, drawdown, color='red', linewidth=1)
+
+    ax.set_title(f'{title} (MDD: {drawdown.min():.1f}%)', fontsize=14)
+    ax.set_xlabel('날짜')
+    ax.set_ylabel('드로우다운 (%)')
+    ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig('drawdown.png', dpi=150)
+    plt.close()
+
+# 사용 예시
+plot_drawdown(bacbb_returns, &quot;BACBB 드로우다운&quot;)
+</code></pre>
+<h3 id="74">7.4 연도별 수익률 막대 그래프</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def plot_yearly_returns(returns, title=&quot;연도별 수익률&quot;):
+    &quot;&quot;&quot;연도별 수익률 막대 그래프&quot;&quot;&quot;
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # 연도별 수익률 계산
+    yearly = returns.groupby(returns.index.year).apply(
+        lambda x: (1 + x).prod() - 1
+    ) * 100
+
+    # 색상 (양수=초록, 음수=빨강)
+    colors = ['green' if r &gt; 0 else 'red' for r in yearly]
+
+    # 막대 그래프
+    ax.bar(yearly.index.astype(str), yearly.values, 
+           color=colors, alpha=0.7, edgecolor='black')
+
+    ax.axhline(y=0, color='black', linewidth=0.5)
+    ax.set_title(title, fontsize=14)
+    ax.set_xlabel('연도')
+    ax.set_ylabel('수익률 (%)')
+
+    # 값 표시
+    for i, (year, ret) in enumerate(yearly.items()):
+        ax.text(i, ret + (2 if ret &gt; 0 else -4), f'{ret:.1f}%', 
+                ha='center', fontsize=10)
+
+    plt.tight_layout()
+    plt.savefig('yearly_returns.png', dpi=150)
+    plt.close()
+
+# 사용 예시
+plot_yearly_returns(bacbb_returns, &quot;BACBB 연도별 수익률&quot;)
+</code></pre>
+<h3 id="75">7.5 수익률 분포 히스토그램</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def plot_distribution(returns, title=&quot;수익률 분포&quot;):
+    &quot;&quot;&quot;수익률 분포 히스토그램&quot;&quot;&quot;
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # 히스토그램
+    ax.hist(returns * 100, bins=50, alpha=0.7, 
+            color='blue', edgecolor='black', density=True)
+
+    # 평균선
+    mean_ret = returns.mean() * 100
+    ax.axvline(x=mean_ret, color='red', linestyle='--', 
+               linewidth=2, label=f'평균: {mean_ret:.3f}%')
+
+    # 0 기준선
+    ax.axvline(x=0, color='black', linestyle='-', linewidth=1)
+
+    ax.set_title(title, fontsize=14)
+    ax.set_xlabel('일간 수익률 (%)')
+    ax.set_ylabel('빈도')
+    ax.legend()
+
+    # 통계 정보 추가
+    stats_text = f&quot;&quot;&quot;
+    평균: {returns.mean()*100:.3f}%
+    표준편차: {returns.std()*100:.2f}%
+    왜도: {returns.skew():.2f}
+    첨도: {returns.kurtosis():.2f}
+    &quot;&quot;&quot;
+    ax.text(0.02, 0.98, stats_text, transform=ax.transAxes,
+            verticalalignment='top', fontfamily='monospace',
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+
+    plt.tight_layout()
+    plt.savefig('distribution.png', dpi=150)
+    plt.close()
+
+# 사용 예시
+plot_distribution(bacbb_returns, &quot;BACBB 수익률 분포&quot;)
+</code></pre>
+<h3 id="76-latex">7.6 논문용 표 만들기 (LaTeX)</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def create_latex_table(data, caption, label):
+    &quot;&quot;&quot;
+    논문용 LaTeX 표 생성
+
+    Parameters:
+    - data: DataFrame
+    - caption: 표 제목
+    - label: 참조용 라벨
+    &quot;&quot;&quot;
+
+    latex = f&quot;&quot;&quot;
+\\begin{{table}}[htbp]
+\\centering
+\\caption{{{caption}}}
+\\label{{{label}}}
+\\begin{{tabular}}{{{'l' + 'c' * (len(data.columns))}}}
+\\toprule
+&quot;&quot;&quot;
+
+    # 헤더
+    latex += &quot; &amp; &quot;.join([&quot;&quot;] + list(data.columns)) + &quot; \\\\\n&quot;
+    latex += &quot;\\midrule\n&quot;
+
+    # 데이터
+    for idx, row in data.iterrows():
+        values = [str(idx)]
+        for val in row:
+            if isinstance(val, float):
+                values.append(f&quot;{val:.2f}&quot;)
+            else:
+                values.append(str(val))
+        latex += &quot; &amp; &quot;.join(values) + &quot; \\\\\n&quot;
+
+    latex += &quot;&quot;&quot;\\bottomrule
+\\end{tabular}
+\\end{table}
+&quot;&quot;&quot;
+
+    return latex
+
+# 사용 예시
+performance_df = pd.DataFrame({
+    'Ann. Return': [15.2, 12.1, 8.5],
+    'Volatility': [18.3, 22.1, 35.2],
+    'Sharpe': [0.83, 0.55, 0.24]
+}, index=['BACBB', 'BACB', 'B&amp;H'])
+
+latex_code = create_latex_table(
+    performance_df, 
+    &quot;Strategy Performance Comparison&quot;,
+    &quot;tab:performance&quot;
+)
+print(latex_code)
+</code></pre>
+<h3 id="77-html">7.7 HTML 표 만들기 (브라우저용)</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;">def create_html_table(data, title):
+    &quot;&quot;&quot;브라우저에서 볼 수 있는 HTML 표&quot;&quot;&quot;
+
+    html = f&quot;&quot;&quot;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;style&gt;
+        body {{ font-family: Arial, sans-serif; padding: 20px; }}
+        table {{ border-collapse: collapse; width: 100%; }}
+        th, td {{ border: 1px solid #ddd; padding: 12px; text-align: center; }}
+        th {{ background-color: #4CAF50; color: white; }}
+        tr:nth-child(even) {{ background-color: #f2f2f2; }}
+        tr:hover {{ background-color: #ddd; }}
+        h2 {{ color: #333; }}
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;{title}&lt;/h2&gt;
+    {data.to_html(classes='styled-table')}
+&lt;/body&gt;
+&lt;/html&gt;
+&quot;&quot;&quot;
+
+    with open('table.html', 'w', encoding='utf-8') as f:
+        f.write(html)
+
+    print(&quot;table.html 저장 완료!&quot;)
+
+# 사용 예시
+create_html_table(performance_df, &quot;전략 성과 비교&quot;)
+</code></pre>
+<hr />
+<h2 id="8">8. 실전 팁과 자주 하는 실수</h2>
+<h3 id="81">8.1 자주 하는 실수들</h3>
+<h4 id="1-look-ahead-bias">❌ 실수 1: Look-Ahead Bias (미래 정보 사용)</h4>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># ❌ 잘못된 코드: 미래 데이터로 베타 계산
+beta = returns.rolling(60).apply(lambda x: x.cov(market) / market.var())
+# 문제: rolling은 현재 시점 포함! 미래를 본 것
+
+# ✅ 올바른 코드: shift로 하루 밀기
+beta = returns.shift(1).rolling(60).apply(...)
+# 어제까지의 데이터로만 계산
+</code></pre>
+<h4 id="2-survivorship-bias">❌ 실수 2: Survivorship Bias (생존자 편향)</h4>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># ❌ 잘못된 예: 현재 존재하는 코인만 분석
+# 상장폐지된 코인은 보통 성과가 나빴음
+# 이걸 빼면 성과가 과대평가됨
+
+# ✅ 올바른 방법: 상장폐지 코인도 포함
+# 데이터 수집 시 과거 모든 코인 포함
+</code></pre>
+<h4 id="3_1">❌ 실수 3: 거래비용 무시</h4>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># ❌ 잘못된 코드: 거래비용 없이 계산
+portfolio_return = long_return - short_return
+
+# ✅ 올바른 코드: 거래비용 반영
+TRADING_FEE = 0.0004  # 0.04%
+turnover = calculate_turnover()  # 회전율
+trading_cost = turnover * TRADING_FEE * 2  # 매수+매도
+portfolio_return = long_return - short_return - trading_cost
+</code></pre>
+<h4 id="4_1">❌ 실수 4: 데이터 스누핑 (과적합)</h4>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># ❌ 잘못된 방법: 전체 데이터로 파라미터 최적화
+best_window = optimize_window(all_data)  # 전체 데이터 사용
+
+# ✅ 올바른 방법: In-Sample로만 최적화
+train_data = all_data[:len(all_data)//2]
+test_data = all_data[len(all_data)//2:]
+
+best_window = optimize_window(train_data)  # 훈련 데이터만
+test_performance = evaluate(test_data, best_window)  # 테스트로 검증
+</code></pre>
+<h3 id="82">8.2 디버깅 팁</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 1. 데이터 확인
+print(df.head())        # 처음 5줄
+print(df.tail())        # 마지막 5줄
+print(df.shape)         # (행, 열) 크기
+print(df.info())        # 데이터 타입, 결측치
+print(df.describe())    # 기본 통계
+
+# 2. 결측치 확인
+print(df.isna().sum())  # 열별 결측치 개수
+print(df.isna().any())  # 결측치 있는 열
+
+# 3. 중간 결과 출력
+def calculate_something(data):
+    step1 = data * 2
+    print(f&quot;Step 1 결과: {step1.head()}&quot;)  # 중간 확인
+
+    step2 = step1.rolling(20).mean()
+    print(f&quot;Step 2 결과: {step2.head()}&quot;)  # 중간 확인
+
+    return step2
+
+# 4. assert로 가정 확인
+assert len(returns) == len(prices) - 1, &quot;수익률 길이 오류!&quot;
+assert returns.isna().sum().sum() == 0, &quot;결측치 있음!&quot;
+assert (weights.sum(axis=1) - 1).abs().max() &lt; 0.01, &quot;비중 합이 1이 아님!&quot;
+</code></pre>
+<h3 id="83">8.3 코드 정리 팁</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 1. 상수는 맨 위에 대문자로
+TRADING_FEE = 0.0004
+RISK_FREE_RATE = 0.05
+REBALANCE_FREQ = 'W'  # Weekly
+
+# 2. 함수에 docstring 쓰기
+def calculate_sharpe(returns, rf=0):
+    &quot;&quot;&quot;
+    샤프 비율 계산
+
+    Parameters:
+    -----------
+    returns : pd.Series
+        일간 수익률
+    rf : float
+        무위험 수익률 (연간, 기본값 0)
+
+    Returns:
+    --------
+    float
+        연간화된 샤프 비율
+    &quot;&quot;&quot;
+    excess = returns - rf/252
+    return excess.mean() / excess.std() * np.sqrt(252)
+
+# 3. 의미 있는 변수명
+# ❌ 나쁜 예
+x = df['BTC'].pct_change()
+y = x.rolling(20).std()
+
+# ✅ 좋은 예
+btc_returns = df['BTC'].pct_change()
+btc_volatility = btc_returns.rolling(20).std()
+</code></pre>
+<h3 id="84">8.4 성능 최적화 팁</h3>
+<pre><code class="language-python" style="background:#f8f8f8; display:block; padding:10px; border-radius:5px; overflow-x:auto;"># 1. 벡터 연산 사용 (for 루프 피하기)
+# ❌ 느린 코드
+result = []
+for i in range(len(df)):
+    result.append(df.iloc[i]['A'] * df.iloc[i]['B'])
+
+# ✅ 빠른 코드
+result = df['A'] * df['B']
+
+# 2. apply 대신 내장 함수
+# ❌ 느린 코드
+df['return'] = df['price'].apply(lambda x: x / df['price'].shift(1) - 1)
+
+# ✅ 빠른 코드
+df['return'] = df['price'].pct_change()
+
+# 3. 큰 데이터는 청크로 처리
+# 메모리 부족할 때
+for chunk in pd.read_csv('big_file.csv', chunksize=10000):
+    process(chunk)
+</code></pre>
+<h3 id="85">8.5 논문 작성 체크리스트</h3>
+<pre><code>□ 데이터
+  □ 출처 명시
+  □ 기간 명시
+  □ 결측치 처리 방법 설명
+  □ 이상치 처리 방법 설명
+
+□ 방법론
+  □ 수식 제시
+  □ 파라미터 설명
+  □ 리밸런싱 주기 명시
+  □ 거래비용 반영 여부
+
+□ 결과
+  □ 기술 통계량 표
+  □ 주요 결과 표
+  □ 유의수준 표시 (***, **, *)
+  □ 그래프 (누적수익률, 드로우다운 등)
+
+□ 강건성
+  □ 다른 기간 테스트
+  □ Out-of-Sample 검증
+  □ 다른 파라미터 테스트
+  □ 거래비용 민감도 분석
+
+□ 코드
+  □ 재현 가능하게 정리
+  □ 주석 달기
+  □ README 작성
+</code></pre>
+<hr />
+<h2 id="_3">🎯 마무리</h2>
+<p>이 가이드를 따라하면서 중요한 것:</p>
+<ol>
+<li><strong>천천히, 한 줄씩</strong> - 급하게 하면 오류 남</li>
+<li><strong>중간중간 확인</strong> - print()로 결과 확인</li>
+<li><strong>에러 메시지 읽기</strong> - 구글에 검색하면 답 나옴</li>
+<li><strong>작은 것부터</strong> - 간단한 분석부터 시작</li>
+</ol>
+<p>처음엔 어렵지만, 몇 번 해보면 패턴이 보여요. 화이팅! 🚀</p>
+<hr />
+<h2 id="_4">📖 추가 학습 자료</h2>
+<ul>
+<li><strong>파이썬 기초</strong>: <a href="https://wikidocs.net/book/1">점프 투 파이썬</a></li>
+<li><strong>pandas</strong>: <a href="https://pandas.pydata.org/docs/user_guide/10min.html">10 Minutes to pandas</a></li>
+<li><strong>금융 분석</strong>: <a href="https://www.quantstart.com/">QuantStart</a></li>
+<li><strong>통계</strong>: <a href="https://www.khanacademy.org/math/statistics-probability">Khan Academy Statistics</a></li>
+</ul>
+<hr />
+<p><em>이 가이드는 BACBB 프로젝트를 기반으로 작성되었습니다.</em>
+<em>질문이 있으면 코드와 함께 구체적으로 물어보세요!</em></p>
+    
+    <footer style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #eee; color: #888; text-align: center;">
+        <p>BACBB 프로젝트 기반 파이썬 금융논문 가이드</p>
+    </footer>
+</body>
+</html>

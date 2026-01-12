@@ -59,7 +59,7 @@ ax.text(2, 10.3, '① 데이터 입력', fontsize=12, fontweight='bold', color='
 draw_box(ax, 0.5, 9, 2.5, 0.8, '암호화폐\n가격/수익률', colors['data'], 9)
 draw_box(ax, 3.5, 9, 2.5, 0.8, '거래량\n(시가총액 가중)', colors['data'], 9)
 draw_box(ax, 6.5, 9, 2.5, 0.8, '국채 금리\n(Term Spread)', colors['data'], 9)
-draw_box(ax, 9.5, 9, 2.5, 0.8, '펀딩비\n(Funding Rate)', colors['data'], 9)
+draw_box(ax, 9.5, 9, 2.5, 0.8, '밸류에이션\n(과거 수익률)', colors['data'], 9)
 
 # 2단계: VAR 모델
 ax.text(2, 8.0, '② VAR(1) 모델 추정', fontsize=12, fontweight='bold', color='#E65100')
@@ -124,6 +124,15 @@ ax.add_patch(formula_box)
 ax.text(6.25, 1.1, 'BACBB 수익률 공식 (수식 13):', fontsize=10, fontweight='bold', ha='center')
 ax.text(6.25, 0.6, 'r_BACBB = w_L * β_L^(-1) * (r_L - r_f - f) - w_S * β_H^(-1) * (r_H - r_f - f)',
         fontsize=10, ha='center', style='italic')
+
+# 거래비용 박스 (오른쪽 하단)
+cost_box = FancyBboxPatch((12.3, 5.8), 3.2, 1.8, boxstyle="round,pad=0.05",
+                           facecolor='#FFEBEE', edgecolor='#C62828', linewidth=1.5)
+ax.add_patch(cost_box)
+ax.text(13.9, 7.3, '거래비용', fontsize=10, fontweight='bold', ha='center', color='#C62828')
+ax.text(13.9, 6.8, '• 펀딩비 (f)', fontsize=9, ha='center')
+ax.text(13.9, 6.4, '• Taker Fee 0.04%', fontsize=9, ha='center')
+ax.text(13.9, 6.0, '• 리밸런싱 비용', fontsize=9, ha='center')
 
 plt.tight_layout()
 plt.savefig('Figure_BACBB_Logic_Flow.png', dpi=200, bbox_inches='tight', facecolor='white')

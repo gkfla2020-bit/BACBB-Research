@@ -1,0 +1,31 @@
+
+\begin{table}[htbp]
+\centering
+\caption{Factor Regression Results}
+\label{tab:regression}
+\begin{tabular}{l*{3}{c}}
+\toprule
+ & \multicolumn{1}{c}{(1)} & \multicolumn{1}{c}{(2)} & \multicolumn{1}{c}{(3)} \\
+ & BACBB & BACB & BACBB \\
+\midrule
+\multicolumn{4}{l}{\textit{Panel A: Market Model}} \\
+\addlinespace
+$\alpha$ (annualized, \%) & 9.16^{*} & 3.28 & 10.00^{**} \\
+ & (1.81) & (0.42) & (1.97) \\
+$\beta_{Market}$ & 0.148^{***} & 0.230^{***} & --- \\
+ & (38.38) & (38.31) & \\
+$\beta_{BACB}$ & --- & --- & 0.376^{***} \\
+ & & & (30.80) \\
+\addlinespace
+\multicolumn{4}{l}{\textit{Panel B: Model Statistics}} \\
+\addlinespace
+$R^2$ & 0.446 & 0.446 & 0.342 \\
+Adjusted $R^2$ & 0.446 & 0.445 & 0.341 \\
+Observations & 1,829 & 1,829 & 1,829 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes:} This table reports OLS regression results. Columns (1) and (2) regress strategy returns on market returns. Column (3) regresses BACBB on BACB. $t$-statistics are in parentheses. $^{***}$, $^{**}$, and $^{*}$ denote statistical significance at the 1\%, 5\%, and 10\% levels, respectively.
+\end{tablenotes}
+\end{table}

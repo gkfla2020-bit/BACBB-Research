@@ -78,6 +78,7 @@ ax.text(13, 7.0, 'z(t+1) = c + A*z(t) + u(t+1)', fontsize=11,
 draw_arrow(ax, (1.75, 9), (2.5, 7.7))
 draw_arrow(ax, (4.75, 9), (5, 7.7))
 draw_arrow(ax, (7.75, 9), (7.5, 7.7))
+draw_arrow(ax, (10.75, 9), (9.5, 7.7))
 
 # 3단계: Campbell-Shiller 분해
 ax.text(2, 5.8, '③ Campbell-Shiller 분해', fontsize=12, fontweight='bold', color='#2E7D32')

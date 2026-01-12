@@ -455,6 +455,7 @@ Expected Return
 </p>
 
 > 시장 수익률을 Cash-Flow News(영구적 충격)와 Discount Rate News(일시적 충격)로 분해하는 Campbell-Shiller 분해의 구조를 보여준다. Cash-Flow Beta는 "Bad Beta"로, 이에 민감한 자산은 장기적으로 더 큰 위험에 노출된다.
+논문에 넣을 때 재구성 필요함
 
 #### 📊 Figure: 펀딩비 메커니즘
 
@@ -463,6 +464,7 @@ Expected Return
 </p>
 
 > 암호화폐 무기한 선물 시장의 펀딩비 메커니즘을 보여준다. 선물 가격이 현물보다 높으면 Long이 Short에게, 낮으면 Short이 Long에게 펀딩비를 지급하여 가격 수렴을 유도한다.
+거래비용에 넣을 사진임
 
 ---
 

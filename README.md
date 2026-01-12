@@ -925,17 +925,13 @@ p-value: 0.003 *
     │   └── BACBB_Tables_Master.tex
     │
     ├── 📄 Reports
-    │   ├── BACBB_Abstract.txt            # 논문 초록
-    │   ├── BACBB_Full_Report.html        # 전체 보고서
-    │   ├── BACBB_Tables.html             # 테이블 모음
-    │   ├── BACBB_vs_BACB_QuantStats.html
-    │   ├── BACBB_vs_Market_QuantStats.html
-    │   └── BACB_vs_Market_QuantStats.html
-    │
-    └── 📚 Guide
-        ├── GUIDE_파이썬_금융논문_완전초보가이드.md
-        ├── GUIDE_파이썬_금융논문_완전초보가이드.html
-        └── GUIDE_파이썬_금융논문_완전초보가이드.pdf
+       ├── BACBB_Abstract.txt            # 논문 초록
+       ├── BACBB_Full_Report.html        # 전체 보고서
+       ├── BACBB_Tables.html             # 테이블 모음
+       ├── BACBB_vs_BACB_QuantStats.html
+       ├── BACBB_vs_Market_QuantStats.html
+       └── BACB_vs_Market_QuantStats.html
+  
 ```
 
 ---

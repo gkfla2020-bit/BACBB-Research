@@ -1,0 +1,5 @@
+Strategy,Ann_Return_pct,Ann_Vol_pct,Sharpe,Sortino,MDD_pct,Win_Rate_pct,t_stat,p_value
+BACBB (CF Beta),14.0,13.67,1.02,1.64,-16.15,50.3,2.76,0.0058
+BACB (FP Beta),11.31,21.28,0.53,0.74,-44.12,50.6,1.43,0.1524
+Buy & Hold,33.66,61.72,0.55,0.73,-79.9,53.5,1.47,0.142
+Low CF Beta Long,57.51,70.52,0.82,1.1,-79.93,53.7,2.2,0.0282
